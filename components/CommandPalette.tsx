@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, Zap, Shield, Database, Mic, Music } from 'lucide-react';
+import { Sparkles, ArrowRight, Zap, Shield, Database, Mic, Music, Box } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface CommandPaletteProps {
   onExecute: (prompt: string) => void;
@@ -8,6 +9,7 @@ interface CommandPaletteProps {
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({ onExecute, isProcessing }) => {
   const [input, setInput] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,11 +21,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onExecute, isPro
 
   const PROMPTS = [
     { cat: 'Auth', icon: <Shield size={14}/>, label: 'Login Seguro', text: 'Generar sistema de Login seguro' },
-    { cat: 'Auth', icon: <Zap size={14}/>, label: 'Vincular Cuenta', text: 'Vincular cuenta anónima actual' },
     { cat: 'Data', icon: <Database size={14}/>, label: 'Admin Users', text: 'Crear panel de administración de users' },
-    { cat: 'Data', icon: <Zap size={14}/>, label: 'Ver Logs', text: 'Generar dashboard de logs (_diagnostics)' },
     { cat: 'AI', icon: <Mic size={14}/>, label: 'Bot Sarcástico', text: 'Crear asistente virtual sarcástico' },
-    { cat: 'AI', icon: <Mic size={14}/>, label: 'Traductor EN', text: 'Activar traducción en tiempo real' },
     { cat: 'Creative', icon: <Music size={14}/>, label: 'OST 8-Bits', text: 'Generar banda sonora 8-bits' },
   ];
 
@@ -58,6 +57,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ onExecute, isPro
 
       {/* Quick Prompts */}
       <div className="flex flex-wrap gap-2 justify-center">
+        {/* Module Factory Chip */}
+        <button
+           onClick={() => navigate('/modules')}
+           className="flex items-center gap-2 px-3 py-1.5 bg-indigo-900/30 hover:bg-indigo-800/50 border border-indigo-500/30 rounded-full text-xs text-indigo-200 transition-all hover:scale-105"
+        >
+           <span className="text-indigo-400"><Box size={14}/></span>
+           Abrir Fábrica de Módulos
+        </button>
+
         {PROMPTS.map((p, i) => (
           <button
             key={i}
